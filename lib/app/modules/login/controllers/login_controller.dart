@@ -1,23 +1,23 @@
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
 class LoginController extends GetxController {
   //TODO: Implement LoginController
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  var isHidden = true.obs;
+
+  void togglePassword() {
+    isHidden.value = !isHidden.value;
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  void login() {
+    Get.snackbar(
+      "Login",
+      "Berhasil masuk",
+      snackPosition: SnackPosition.BOTTOM,
+    );
   }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }
