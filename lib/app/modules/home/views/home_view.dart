@@ -80,7 +80,7 @@ class HomeView extends GetView<HomeController> {
                         const CircleAvatar(
                           radius: 24,
                           backgroundImage: AssetImage(
-                            'assets/images/profile.jpg',
+                            'assets/images/profile.png',
                           ),
                         ),
 

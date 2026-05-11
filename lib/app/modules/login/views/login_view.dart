@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:teraparent_mobile/app/modules/home/views/home_view.dart';
 import 'package:teraparent_mobile/app/modules/login/controllers/login_controller.dart';
+import 'package:teraparent_mobile/app/modules/register/views/register_view.dart';
 
 
 class LoginView extends GetView<LoginController> {
@@ -170,6 +172,7 @@ class LoginView extends GetView<LoginController> {
                                 decoration: InputDecoration(
                                   prefixIcon:
                                       const Icon(Icons.lock_outline),
+                                  hintText: "••••••••",
                                   suffixIcon: IconButton(
                                     onPressed:
                                         controller.togglePassword,
@@ -196,7 +199,9 @@ class LoginView extends GetView<LoginController> {
                               width: double.infinity,
                               height: 55,
                               child: ElevatedButton(
-                                onPressed: controller.login,
+                                onPressed: (){
+                                  Get.to(() => HomeView());
+                                },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: primaryColor,
                                   shape: RoundedRectangleBorder(
@@ -255,12 +260,17 @@ class LoginView extends GetView<LoginController> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("Belum punya akun? "),
-                          Text(
-                            "Daftar",
-                            style: TextStyle(
-                              color: primaryColor,
-                              fontWeight: FontWeight.bold,
+                          const Text("Belum punya akun?"),
+                          TextButton(
+                            onPressed: () {
+                              Get.to(() => RegisterView());
+                            },
+                            child: Text(
+                              "Daftar",
+                              style: TextStyle(
+                                color: primaryColor,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ],

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teraparent_mobile/app/modules/login/views/login_view.dart';
-
 import '../controllers/register_controller.dart';
 
 class RegisterView extends GetView<RegisterController> {
@@ -34,8 +33,9 @@ class RegisterView extends GetView<RegisterController> {
                     ],
                   ),
                   child: const CircleAvatar(
-                    backgroundImage: AssetImage(
-                      'assets/images/logo.png',
+                    backgroundImage: 
+                    AssetImage(
+                      'assets/images/regisImage.png',
                     ),
                   ),
                 ),
