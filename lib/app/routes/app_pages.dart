@@ -1,15 +1,17 @@
 import 'package:get/get.dart';
-import 'package:teraparent_mobile/app/modules/activities/views/komunikasi_views.dart';
-import 'package:teraparent_mobile/app/modules/activities/views/motorik_halus_view.dart';
-import 'package:teraparent_mobile/app/modules/activities/views/motorik_kasar_view.dart';
+
 import '../modules/Riwayat/bindings/riwayat_binding.dart';
 import '../modules/Riwayat/views/riwayat_view.dart';
 import '../modules/activities/bindings/activities_binding.dart';
 import '../modules/activities/views/activities_view.dart';
+import '../modules/activity_success/bindings/activity_success_binding.dart';
+import '../modules/activity_success/views/activity_success_view.dart';
 import '../modules/ahli_terapis/bindings/ahli_terapis_binding.dart';
 import '../modules/ahli_terapis/views/ahli_terapis_view.dart';
 import '../modules/child_date/bindings/child_date_binding.dart';
 import '../modules/child_date/views/child_date_view.dart';
+import '../modules/detail_activity/bindings/detail_activity_binding.dart';
+import '../modules/detail_activity/views/detail_activity_view.dart';
 import '../modules/forgotpass/bindings/forgotpass_binding.dart';
 import '../modules/forgotpass/views/forgotpass_view.dart';
 import '../modules/grafik_perkembangan/bindings/grafik_perkembangan_binding.dart';
@@ -95,21 +97,6 @@ class AppPages {
       binding: ActivitiesBinding(),
     ),
     GetPage(
-      name: _Paths.MOTORIK_HALUS,
-      page: () => const MotorikHalusView(),
-      binding: ActivitiesBinding(),
-    ),
-    GetPage(
-      name: _Paths.MOTORIK_KASAR,
-      page: () => const MotorikKasarView(),
-      binding: ActivitiesBinding(),
-    ),
-    GetPage(
-      name: _Paths.KOMUNIKASI,
-      page: () => const KomunikasiView(),
-      binding: ActivitiesBinding(),
-    ),
-    GetPage(
       name: _Paths.AHLI_TERAPIS,
       page: () => const AhliTerapisView(),
       binding: AhliTerapisBinding(),
@@ -123,6 +110,16 @@ class AppPages {
       name: _Paths.RIWAYAT,
       page: () => const RiwayatView(),
       binding: RiwayatBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAIL_ACTIVITY,
+      page: () => const DetailActivityView(),
+      binding: DetailActivityBinding(),
+    ),
+    GetPage(
+      name: _Paths.ACTIVITY_SUCCESS,
+      page: () => const ActivitySuccessView(),
+      binding: ActivitySuccessBinding(),
     ),
   ];
 }

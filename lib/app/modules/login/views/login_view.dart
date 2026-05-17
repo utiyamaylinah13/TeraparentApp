@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teraparent_mobile/app/modules/login/controllers/login_controller.dart';
 import 'package:teraparent_mobile/app/routes/app_pages.dart';
-import 'package:teraparent_mobile/app/components/colors.dart';
+import 'package:teraparent_mobile/app/core/theme/colors.dart';
 
 class LoginView extends GetView<LoginController> {
   LoginView({super.key});

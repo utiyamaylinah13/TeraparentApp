@@ -23,4 +23,7 @@ class AppColors {
 
   // INPUT
   static const Color inputBg = Color(0xFFF5F5F5);
+
+  static const Color warningBg = Color(0xFFFDF6E2);     // Background tips keamanan
+  static const Color warningText = Color(0xFF7A6021);
 }

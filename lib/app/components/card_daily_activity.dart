@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:teraparent_mobile/app/components/colors.dart';
+import 'package:teraparent_mobile/app/core/theme/colors.dart';
 
 class DailyActivityCardSuccess extends StatelessWidget {
   final String title;

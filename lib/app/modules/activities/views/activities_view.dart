@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teraparent_mobile/app/components/bottom_nav.dart';
 import 'package:teraparent_mobile/app/components/card_daily_activity.dart';
-import 'package:teraparent_mobile/app/components/colors.dart';
+import 'package:teraparent_mobile/app/components/header_profile.dart';
+import 'package:teraparent_mobile/app/core/theme/colors.dart';
 import 'package:teraparent_mobile/app/routes/app_pages.dart';
 import '../controllers/activities_controller.dart';
 
@@ -22,6 +23,10 @@ class ActivitiesView extends GetView<ActivitiesController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+
+              headerProfile(),
+
+              SizedBox(height: 30),
               // TITLE
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -108,7 +113,7 @@ class ActivitiesView extends GetView<ActivitiesController> {
                 description: 'latihan mewarnai untuk melatih koordinasi mata dan tangan',
                 time: '16.00',
                 onStart: () {
-                  Get.toNamed(Routes.MOTORIK_HALUS);
+                  Get.toNamed(Routes.DETAIL_ACTIVITY);
                 },
               ),
               const SizedBox(height: 32),
@@ -138,8 +143,7 @@ class ActivitiesView extends GetView<ActivitiesController> {
                 description: 'latihan bersepeda untuk melatih keseimbangan dan koordinasi',
                 time: '15.00',
                 onStart: () {
-                  Get.toNamed(Routes.MOTORIK_KASAR);
-
+                  Get.toNamed(Routes.DETAIL_ACTIVITY);
                 },
               ),
 
@@ -167,7 +171,7 @@ class ActivitiesView extends GetView<ActivitiesController> {
                 description: "latihan mendongeng untuk melatih kemampuan berbicara", 
                 time: "14.00", 
                 onStart: (){
-                  Get.toNamed(Routes.KOMUNIKASI);
+                  Get.toNamed(Routes.DETAIL_ACTIVITY);  
                 }
                 ),
 

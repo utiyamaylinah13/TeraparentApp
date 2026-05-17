@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:teraparent_mobile/app/components/colors.dart';
+import 'package:teraparent_mobile/app/core/theme/colors.dart';
 import '../controllers/child_date_controller.dart';
 
 class ChildDataView extends GetView<ChildDataController> {
