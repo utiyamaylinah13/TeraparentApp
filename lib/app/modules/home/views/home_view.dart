@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:teraparent_mobile/app/components/header_profile.dart';
+import 'package:teraparent_mobile/app/core/widgets/card_daily_activity.dart';
+import 'package:teraparent_mobile/app/core/widgets/header_profile.dart';
 import 'package:teraparent_mobile/app/routes/app_pages.dart';
 import 'package:teraparent_mobile/app/core/theme/colors.dart';
-import '../../../components/bottom_nav.dart';
+import '../../../core/widgets/bottom_nav.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -72,7 +73,7 @@ class HomeView extends GetView<HomeController> {
 
                   // ================= GREETING =================
                   const Text(
-                    'Selamat datang,\nOrang Tua 👋',
+                    'Selamat datang,\nAsep Subagja 👋',
                     style: TextStyle(
                       fontSize: 34,
                       fontWeight: FontWeight.bold,
@@ -91,7 +92,7 @@ class HomeView extends GetView<HomeController> {
                         ),
 
                         TextSpan(
-                          text: 'Ararya, 5 Tahun',
+                          text: 'Julio, 4 Tahun',
                           style: TextStyle(
                             color: Color(0xff2F6F57),
                             fontSize: 18,
@@ -255,6 +256,16 @@ class HomeView extends GetView<HomeController> {
                   ),
 
                   const SizedBox(height: 20),
+
+                  DailyActivityCardNone(
+                    imageUrl: "https://imgs.search.brave.com/zmlUaqMWUdPH-nO5dtFq2ikoaboiYpI0xjz7FGmKdY8/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9zdDQu/ZGVwb3NpdHBob3Rv/cy5jb20vNDYwNDMw/NS8yMjkyMS9pLzQ1/MC9kZXBvc2l0cGhv/dG9zXzIyOTIxNDc5/MC1zdG9jay1waG90/by1jaGlsZC1iaWN5/Y2xlLWFzcGhhbHQt/cm9hZC1zdW1tZXIu/anBn",
+                    title: 'Bersepeda',
+                    description: 'latihan bersepeda untuk melatih keseimbangan dan koordinasi',
+                    time: '15.00',
+                    onStart: () {
+                      Get.toNamed(Routes.DETAIL_ACTIVITY);
+                    },
+                  ),
 
                   const SizedBox(height: 120),
                 ],

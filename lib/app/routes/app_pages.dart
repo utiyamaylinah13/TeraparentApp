@@ -26,12 +26,12 @@ import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
+import '../modules/result_screening/bindings/result_screening_binding.dart';
+import '../modules/result_screening/views/result_screening_view.dart';
 import '../modules/screening/bindings/screening_binding.dart';
 import '../modules/screening/views/screening_view.dart';
 import '../modules/security_password/bindings/security_password_binding.dart';
 import '../modules/security_password/views/security_password_view.dart';
-import '../modules/settings_notification/bindings/settings_notification_binding.dart';
-import '../modules/settings_notification/views/settings_notification_view.dart';
 
 part 'app_routes.dart';
 
@@ -77,11 +77,6 @@ class AppPages {
       binding: SecurityPasswordBinding(),
     ),
     GetPage(
-      name: _Paths.SETTINGS_NOTIFICATION,
-      page: () => const SettingsNotificationView(),
-      binding: SettingsNotificationBinding(),
-    ),
-    GetPage(
       name: _Paths.SCREENING,
       page: () => const ScreeningView(),
       binding: ScreeningBinding(),
@@ -120,6 +115,11 @@ class AppPages {
       name: _Paths.ACTIVITY_SUCCESS,
       page: () => const ActivitySuccessView(),
       binding: ActivitySuccessBinding(),
+    ),
+    GetPage(
+      name: _Paths.RESULT_SCREENING,
+      page: () => const ResultScreeningView(),
+      binding: ResultScreeningBinding(),
     ),
   ];
 }

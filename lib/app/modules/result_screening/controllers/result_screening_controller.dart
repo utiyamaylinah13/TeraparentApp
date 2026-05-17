@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
-class SettingsNotificationController extends GetxController {
-  //TODO: Implement SettingsNotificationController
+class ResultScreeningController extends GetxController {
+  //TODO: Implement ResultScreeningController
 
   final count = 0.obs;
   @override

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teraparent_mobile/app/core/theme/colors.dart';
-import 'package:teraparent_mobile/app/components/header_profile.dart';
+import 'package:teraparent_mobile/app/core/widgets/header_profile.dart';
 import 'package:teraparent_mobile/app/routes/app_pages.dart';
-import '../../../components/bottom_nav.dart';
+import '../../../core/widgets/bottom_nav.dart';
 import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
@@ -276,12 +276,14 @@ class ProfileView extends GetView<ProfileController> {
                     color: const Color(0xFFE5E5E5),
                     borderRadius: BorderRadius.circular(16),
                   ),
-                  child: const Center(
-                    child: Text(
+                  child: Center(
+                    child: TextButton(
+                      onPressed: () => Get.toNamed(Routes.RIWAYAT),
+                      child: const Text(
                       'Lihat Seluruh Riwayat',
                       style: TextStyle(fontSize: 18),
                     ),
-                  ),
+                  ),),
                 ),
 
                 const SizedBox(height: 30),
@@ -300,7 +302,9 @@ class ProfileView extends GetView<ProfileController> {
                 settingItem(
                   icon: Icons.person_outline,
                   title: 'Informasi Pribadi',
-                  onTap: () {},
+                  onTap: () {
+                    Get.toNamed(Routes.INFO_PRIBADI);
+                  },
                 ),
 
                 const SizedBox(height: 14),
@@ -308,15 +312,9 @@ class ProfileView extends GetView<ProfileController> {
                 settingItem(
                   icon: Icons.security,
                   title: 'Keamanan & Password',
-                  onTap: () {},
-                ),
-
-                const SizedBox(height: 14),
-
-                settingItem(
-                  icon: Icons.notifications_none,
-                  title: 'Pengaturan Notifikasi',
-                  onTap: () {},
+                  onTap: () {
+                    Get.toNamed(Routes.SECURITY_PASSWORD);
+                  },
                 ),
 
                 const SizedBox(height: 30),

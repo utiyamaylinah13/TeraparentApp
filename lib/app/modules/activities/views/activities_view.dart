@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:teraparent_mobile/app/components/bottom_nav.dart';
-import 'package:teraparent_mobile/app/components/card_daily_activity.dart';
-import 'package:teraparent_mobile/app/components/header_profile.dart';
+import 'package:teraparent_mobile/app/core/widgets/bottom_nav.dart';
+import 'package:teraparent_mobile/app/core/widgets/card_daily_activity.dart';
+import 'package:teraparent_mobile/app/core/widgets/header_profile.dart';
 import 'package:teraparent_mobile/app/core/theme/colors.dart';
 import 'package:teraparent_mobile/app/routes/app_pages.dart';
 import '../controllers/activities_controller.dart';
@@ -108,7 +108,7 @@ class ActivitiesView extends GetView<ActivitiesController> {
 
               const SizedBox(height: 18),
               DailyActivityCardNone(
-                label: 'Belum Dimulai',
+                imageUrl: "https://imgs.search.brave.com/ILj1lhC8OBlKORancEnHQvnbRoJ33JwBVHx3l2DsutQ/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvODEw/NjY1NTQyL2lkL2Zv/dG8vcGVuc2lsLWRp/LXRhbmdhbi1hbmFr/LmpwZz9zPTYxMng2/MTImdz0wJms9MjAm/Yz0tbk4xTGZjUlVE/ODdCSkJsZFNBVjJk/NjRNcEx1R3IwazZl/aTRDZjh2NTU4PQ",
                 title: 'Mewarnai Pola',
                 description: 'latihan mewarnai untuk melatih koordinasi mata dan tangan',
                 time: '16.00',
@@ -137,8 +137,9 @@ class ActivitiesView extends GetView<ActivitiesController> {
                 title: 'Bermain Bola', 
                 time: '10:00 WIB'),
               const SizedBox(height: 18),
+              
               DailyActivityCardNone(
-                label: 'Belum Dimulai',
+                imageUrl: "https://imgs.search.brave.com/zmlUaqMWUdPH-nO5dtFq2ikoaboiYpI0xjz7FGmKdY8/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9zdDQu/ZGVwb3NpdHBob3Rv/cy5jb20vNDYwNDMw/NS8yMjkyMS9pLzQ1/MC9kZXBvc2l0cGhv/dG9zXzIyOTIxNDc5/MC1zdG9jay1waG90/by1jaGlsZC1iaWN5/Y2xlLWFzcGhhbHQt/cm9hZC1zdW1tZXIu/anBn",
                 title: 'Bersepeda',
                 description: 'latihan bersepeda untuk melatih keseimbangan dan koordinasi',
                 time: '15.00',
@@ -166,7 +167,7 @@ class ActivitiesView extends GetView<ActivitiesController> {
               const SizedBox(height: 18),
 
               DailyActivityCardNone(
-                label: "Belum Dimulai", 
+                imageUrl: "https://imgs.search.brave.com/27ClwBV24TdG4OiiB2jmNxt-2k1_yzklGhbx22SJZ_8/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9jZG4w/LXByb2R1Y3Rpb24t/aW1hZ2VzLWtseS5h/a2FtYWl6ZWQubmV0/L1JvLXdEVU5jNUVj/VlkxS3dSeUtjcHhT/UDJuZz0vMzIweDIx/Ny9zbWFydC9maWx0/ZXJzOnF1YWxpdHko/NzUpOnN0cmlwX2lj/YygpOmZvcm1hdCh3/ZWJwKS9rbHktbWVk/aWEtcHJvZHVjdGlv/bi9tZWRpYXMvNTU1/OTUxNC9vcmlnaW5h/bC8wMzY0MDU2MDBf/MTc3NjU3OTEzOS1t/b3RoZXItdGVsbGlu/Zy1zdG9yeS10d28t/bGl0dGxlLWRhdWdo/dGVyLWhvbWUtZ2Fy/ZGVuXzFfLmpwZw",
                 title: "Mendongeng", 
                 description: "latihan mendongeng untuk melatih kemampuan berbicara", 
                 time: "14.00", 

@@ -19,6 +19,7 @@ abstract class Routes {
   static const RIWAYAT = _Paths.RIWAYAT;
   static const DETAIL_ACTIVITY = _Paths.DETAIL_ACTIVITY;
   static const ACTIVITY_SUCCESS = _Paths.ACTIVITY_SUCCESS;
+  static const RESULT_SCREENING = _Paths.RESULT_SCREENING;
 }
 
 abstract class _Paths {
@@ -39,4 +40,5 @@ abstract class _Paths {
   static const RIWAYAT = '/riwayat';
   static const DETAIL_ACTIVITY = '/detail-activity';
   static const ACTIVITY_SUCCESS = '/activity-success';
+  static const RESULT_SCREENING = '/result-screening';
 }
