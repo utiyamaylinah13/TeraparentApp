@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
-
+import 'package:teraparent_mobile/app/modules/activities/views/komunikasi_views.dart';
+import 'package:teraparent_mobile/app/modules/activities/views/motorik_halus_view.dart';
+import 'package:teraparent_mobile/app/modules/activities/views/motorik_kasar_view.dart';
 import '../modules/Riwayat/bindings/riwayat_binding.dart';
 import '../modules/Riwayat/views/riwayat_view.dart';
 import '../modules/activities/bindings/activities_binding.dart';
@@ -90,6 +92,21 @@ class AppPages {
     GetPage(
       name: _Paths.ACTIVITIES,
       page: () => const ActivitiesView(),
+      binding: ActivitiesBinding(),
+    ),
+    GetPage(
+      name: _Paths.MOTORIK_HALUS,
+      page: () => const MotorikHalusView(),
+      binding: ActivitiesBinding(),
+    ),
+    GetPage(
+      name: _Paths.MOTORIK_KASAR,
+      page: () => const MotorikKasarView(),
+      binding: ActivitiesBinding(),
+    ),
+    GetPage(
+      name: _Paths.KOMUNIKASI,
+      page: () => const KomunikasiView(),
       binding: ActivitiesBinding(),
     ),
     GetPage(

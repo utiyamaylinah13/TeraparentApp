@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:teraparent_mobile/app/components/bottom_nav.dart';
 import 'package:teraparent_mobile/app/components/card_daily_activity.dart';
 import 'package:teraparent_mobile/app/components/colors.dart';
+import 'package:teraparent_mobile/app/routes/app_pages.dart';
 import '../controllers/activities_controller.dart';
 
 class ActivitiesView extends GetView<ActivitiesController> {
@@ -49,8 +50,6 @@ class ActivitiesView extends GetView<ActivitiesController> {
                   ),
                 ],
               ),
-
-              const SizedBox(height: 28),
 
               const SizedBox(height: 30),
 
@@ -109,7 +108,7 @@ class ActivitiesView extends GetView<ActivitiesController> {
                 description: 'latihan mewarnai untuk melatih koordinasi mata dan tangan',
                 time: '16.00',
                 onStart: () {
-
+                  Get.toNamed(Routes.MOTORIK_HALUS);
                 },
               ),
               const SizedBox(height: 32),
@@ -139,6 +138,7 @@ class ActivitiesView extends GetView<ActivitiesController> {
                 description: 'latihan bersepeda untuk melatih keseimbangan dan koordinasi',
                 time: '15.00',
                 onStart: () {
+                  Get.toNamed(Routes.MOTORIK_KASAR);
 
                 },
               ),
@@ -167,7 +167,7 @@ class ActivitiesView extends GetView<ActivitiesController> {
                 description: "latihan mendongeng untuk melatih kemampuan berbicara", 
                 time: "14.00", 
                 onStart: (){
-                  
+                  Get.toNamed(Routes.KOMUNIKASI);
                 }
                 ),
 

@@ -14,6 +14,9 @@ abstract class Routes {
   static const SCREENING = _Paths.SCREENING;
   static const CHILD_DATE = _Paths.CHILD_DATE;
   static const ACTIVITIES = _Paths.ACTIVITIES;
+  static const MOTORIK_HALUS = _Paths.MOTORIK_HALUS;
+  static const MOTORIK_KASAR = _Paths.MOTORIK_KASAR;
+  static const KOMUNIKASI = _Paths.KOMUNIKASI;
   static const AHLI_TERAPIS = _Paths.AHLI_TERAPIS;
   static const GRAFIK_PERKEMABNAGAN = _Paths.GRAFIK_PERKEMABNAGAN;
   static const GRAFIK_PERKEMBANGAN = _Paths.GRAFIK_PERKEMBANGAN;
@@ -33,6 +36,9 @@ abstract class _Paths {
   static const SCREENING = '/screening';
   static const CHILD_DATE = '/child-date';
   static const ACTIVITIES = '/activities';
+  static const MOTORIK_HALUS = '/motorik-halus';
+  static const MOTORIK_KASAR = '/motorik-kasar';
+  static const KOMUNIKASI = '/komunikasi';
   static const AHLI_TERAPIS = '/ahli-terapis';
   static const GRAFIK_PERKEMABNAGAN = '/grafik-perkemabnagan';
   static const GRAFIK_PERKEMBANGAN = '/grafik-perkembangan';
