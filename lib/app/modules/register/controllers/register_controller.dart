@@ -8,13 +8,19 @@ class RegisterController extends GetxController {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
   var isPasswordHidden = true.obs;
+  var isConfirmPasswordHidden = true.obs;
   var isChecked = false.obs;
   var isLoading = false.obs;
 
   void togglePassword() {
     isPasswordHidden.value = !isPasswordHidden.value;
+  }
+
+  void toggleConfirmPassword() {
+    isConfirmPasswordHidden.value = !isConfirmPasswordHidden.value;
   }
 
   void toggleCheckbox(bool? value) {
@@ -47,6 +53,14 @@ class RegisterController extends GetxController {
       return;
     }
 
+    if (confirmPasswordController.text != passwordController.text) {
+      Get.snackbar(
+        "Error",
+        "Konfirmasi password tidak cocok",
+      );
+      return;
+    }
+
     if (!isChecked.value) {
       Get.snackbar(
         "Error",
@@ -67,7 +81,7 @@ class RegisterController extends GetxController {
         "Akun berhasil dibuat",
       );
       
-      Get.offAllNamed(Routes.LOGIN);
+      Get.offAllNamed(Routes.VERIFY_OTP);
 
     } catch (e) {
 
@@ -86,6 +100,7 @@ class RegisterController extends GetxController {
     nameController.dispose();
     emailController.dispose();
     passwordController.dispose();
+    confirmPasswordController.dispose();
     super.onClose();
   }
 }

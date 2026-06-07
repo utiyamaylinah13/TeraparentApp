@@ -12,6 +12,10 @@ import '../modules/child_date/bindings/child_date_binding.dart';
 import '../modules/child_date/views/child_date_view.dart';
 import '../modules/detail_activity/bindings/detail_activity_binding.dart';
 import '../modules/detail_activity/views/detail_activity_view.dart';
+import '../modules/face_login/bindings/face_login_binding.dart';
+import '../modules/face_login/views/face_login_view.dart';
+import '../modules/face_register/bindings/face_register_binding.dart';
+import '../modules/face_register/views/face_register_view.dart';
 import '../modules/forgotpass/bindings/forgotpass_binding.dart';
 import '../modules/forgotpass/views/forgotpass_view.dart';
 import '../modules/grafik_perkembangan/bindings/grafik_perkembangan_binding.dart';
@@ -32,6 +36,10 @@ import '../modules/screening/bindings/screening_binding.dart';
 import '../modules/screening/views/screening_view.dart';
 import '../modules/security_password/bindings/security_password_binding.dart';
 import '../modules/security_password/views/security_password_view.dart';
+import '../modules/verify_otp/bindings/verify_otp_binding.dart';
+import '../modules/verify_otp/views/verify_otp_view.dart';
+import '../modules/verify_success/bindings/verify_success_binding.dart';
+import '../modules/verify_success/views/verify_success_view.dart';
 
 part 'app_routes.dart';
 
@@ -120,6 +128,26 @@ class AppPages {
       name: _Paths.RESULT_SCREENING,
       page: () => const ResultScreeningView(),
       binding: ResultScreeningBinding(),
+    ),
+    GetPage(
+      name: _Paths.VERIFY_OTP,
+      page: () => const VerifyOtpView(),
+      binding: VerifyOtpBinding(),
+    ),
+    GetPage(
+      name: _Paths.VERIFY_SUCCESS,
+      page: () => const VerifySuccessView(),
+      binding: VerifySuccessBinding(),
+    ),
+    GetPage(
+      name: _Paths.FACE_REGISTER,
+      page: () => const FaceRegisterView(),
+      binding: FaceRegisterBinding(),
+    ),
+    GetPage(
+      name: _Paths.FACE_LOGIN,
+      page: () => const FaceLoginView(),
+      binding: FaceLoginBinding(),
     ),
   ];
 }

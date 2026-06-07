@@ -13,8 +13,7 @@ class NavigationController extends GetxController {
 
   void changeIndex(int index) {
     selectedIndex.value = index;
-
-    // delay kecil biar Obx update dulu
+    
     Future.microtask(() {
       Get.toNamed(routes[index]);
     });

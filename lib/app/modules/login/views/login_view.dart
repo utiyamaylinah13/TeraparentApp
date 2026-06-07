@@ -54,7 +54,7 @@ class LoginView extends GetView<LoginController> {
                       const SizedBox(height: 20),
 
                       // Logo / image
-                      Image.asset("assets/images/login.png", width: 130),
+                      Image.asset("assets/logos/teralogo_transparan.png", width: 130),
 
                       const SizedBox(height: 20),
 
@@ -65,14 +65,6 @@ class LoginView extends GetView<LoginController> {
                           fontWeight: FontWeight.bold,
                           color: AppColors.primary,
                         ),
-                      ),
-
-                      const SizedBox(height: 8),
-
-                      const Text(
-                        "Mendukung setiap langkah\nperkembangan buah hati Anda.",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 15, color: Colors.black54),
                       ),
 
                       const SizedBox(height: 30),
@@ -263,7 +255,9 @@ class LoginView extends GetView<LoginController> {
                               width: double.infinity,
                               height: 56,
                               child: OutlinedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Get.toNamed(Routes.FACE_LOGIN);
+                                },
                                 style: OutlinedButton.styleFrom(
                                   side: BorderSide(color: Colors.grey.shade300),
                                   shape: RoundedRectangleBorder(
@@ -273,15 +267,15 @@ class LoginView extends GetView<LoginController> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Image.asset(
-                                      "assets/images/google_logo.png",
-                                      width: 22,
+                                    const Icon(
+                                      Icons.account_circle,
+                                      size: 22,
+                                      color: Colors.black87,
                                     ),
-
                                     const SizedBox(width: 12),
 
                                     const Text(
-                                      "Masuk dengan Google",
+                                      "Masuk dengan  Wajah",
                                       style: TextStyle(
                                         fontSize: 16,
                                         color: Colors.black87,

@@ -20,10 +20,17 @@ abstract class Routes {
   static const DETAIL_ACTIVITY = _Paths.DETAIL_ACTIVITY;
   static const ACTIVITY_SUCCESS = _Paths.ACTIVITY_SUCCESS;
   static const RESULT_SCREENING = _Paths.RESULT_SCREENING;
+  static const SPLASH = _Paths.SPLASH;
+  static const VERIFY_OTP = _Paths.VERIFY_OTP;
+  static const VERIFY_SUCCESS = _Paths.VERIFY_SUCCESS;
+  static const SIGNIN_FACE = _Paths.SIGNIN_FACE;
+  static const FACE_REGISTER = _Paths.FACE_REGISTER;
+  static const FACE_LOGIN = _Paths.FACE_LOGIN;
 }
 
 abstract class _Paths {
   _Paths._();
+  static const SPLASH = '/';
   static const HOME = '/home';
   static const LOGIN = '/login';
   static const REGISTER = '/register';
@@ -41,4 +48,9 @@ abstract class _Paths {
   static const DETAIL_ACTIVITY = '/detail-activity';
   static const ACTIVITY_SUCCESS = '/activity-success';
   static const RESULT_SCREENING = '/result-screening';
+  static const VERIFY_OTP = '/verify-otp';
+  static const VERIFY_SUCCESS = '/verify-success';
+  static const SIGNIN_FACE = '/signin-face';
+  static const FACE_REGISTER = '/face-register';
+  static const FACE_LOGIN = '/face-login';
 }

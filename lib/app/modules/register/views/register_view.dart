@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:teraparent_mobile/app/core/theme/colors.dart';
 import 'package:teraparent_mobile/app/modules/register/controllers/register_controller.dart';
 import 'package:teraparent_mobile/app/routes/app_pages.dart';
 
 class RegisterView extends GetView<RegisterController> {
   RegisterView({super.key});
-
-  final Color primaryColor = const Color(0xff2F7D69);
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +53,7 @@ class RegisterView extends GetView<RegisterController> {
                       const SizedBox(height: 20),
 
                       // Logo / image
-                      Image.asset("assets/images/login.png", width: 130),
+                      Image.asset("assets/logos/teralogo_transparan.png", width: 130),
 
                       const SizedBox(height: 20),
 
@@ -63,16 +62,8 @@ class RegisterView extends GetView<RegisterController> {
                         style: TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
-                          color: primaryColor,
+                          color: AppColors.primary,
                         ),
-                      ),
-
-                      const SizedBox(height: 8),
-
-                      const Text(
-                        "Mendukung setiap langkah\nperkembangan buah hati Anda.",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 15, color: Colors.black54),
                       ),
 
                       const SizedBox(height: 30),
@@ -199,13 +190,47 @@ class RegisterView extends GetView<RegisterController> {
 
                             const SizedBox(height: 22),
 
+                            const Text(
+                              "Konfirmasi Kata Sandi",
+                              style: TextStyle(fontWeight: FontWeight.w600),
+                            ),
+
+                            const SizedBox(height: 10),
+
+                            Obx(
+                              () => TextField(
+                                controller: controller.confirmPasswordController,
+                                obscureText: controller.isConfirmPasswordHidden.value,
+                                decoration: InputDecoration(
+                                  hintText: "••••••••",
+                                  prefixIcon: const Icon(Icons.lock_outline),
+                                  suffixIcon: IconButton(
+                                    onPressed: controller.toggleConfirmPassword,
+                                    icon: Icon(
+                                      controller.isConfirmPasswordHidden.value
+                                          ? Icons.visibility_outlined
+                                          : Icons.visibility_off_outlined,
+                                    ),
+                                  ),
+                                  filled: true,
+                                  fillColor: const Color(0xffF5F5F5),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(18),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                            const SizedBox(height: 22),
+
                             Obx(
                               () => Row(
                                 children: [
                                   Checkbox(
                                     value: controller.isChecked.value,
                                     onChanged: controller.toggleCheckbox,
-                                    activeColor: primaryColor,
+                                    activeColor: AppColors.primary,
                                   ),
 
                                   Expanded(
@@ -222,7 +247,7 @@ class RegisterView extends GetView<RegisterController> {
                                           TextSpan(
                                             text: "Ketentuan & Kebijakan",
                                             style: TextStyle(
-                                              color: primaryColor,
+                                              color: AppColors.primary,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
@@ -245,7 +270,7 @@ class RegisterView extends GetView<RegisterController> {
                                       ? null
                                       : controller.register,
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: primaryColor,
+                                    backgroundColor: AppColors.primary,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(18),
                                     ),
@@ -330,7 +355,7 @@ class RegisterView extends GetView<RegisterController> {
                             child: Text(
                               "Masuk",
                               style: TextStyle(
-                                color: primaryColor,
+                                color: AppColors.primary,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),

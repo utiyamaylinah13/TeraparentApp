@@ -26,4 +26,6 @@ class AppColors {
 
   static const Color warningBg = Color(0xFFFDF6E2);     // Background tips keamanan
   static const Color warningText = Color(0xFF7A6021);
+
+  static const Color softGreen = Color(0xFFD8F3DC);
 }

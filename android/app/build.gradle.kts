@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "teraparent.teraparent_mobile"
+    namespace = "teraparent.teraparent"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 

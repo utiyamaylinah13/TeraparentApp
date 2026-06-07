@@ -1,4 +1,4 @@
-package teraparent.teraparent_mobile
+package teraparent.teraparent
 
 import io.flutter.embedding.android.FlutterActivity
 
