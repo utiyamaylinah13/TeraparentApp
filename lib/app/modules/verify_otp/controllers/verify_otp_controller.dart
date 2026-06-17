@@ -17,7 +17,7 @@ class VerifyOtpController extends GetxController {
   final ResendOtpService _resendOtpService = Get.find<ResendOtpService>();
 
   final FlutterSecureStorage _storage = const FlutterSecureStorage();
-  late SharedPreferences _prefs;
+  
 
   final isLoading = false.obs;
   final secondsLeft = 60.obs;
@@ -99,7 +99,7 @@ class VerifyOtpController extends GetxController {
       );
 
       if (result.success) {
-
+        final _prefs = await SharedPreferences.getInstance();
         final token = result.data!.token;
         final user = result.data!.user;
 
@@ -111,8 +111,6 @@ class VerifyOtpController extends GetxController {
           snackPosition: SnackPosition.BOTTOM,
         );
 
-        Get.offAllNamed(Routes.VERIFY_SUCCESS);
-
         await _storage.write(key: 'token', value: token);
         await _storage.write(key: 'user_id', value: user.id);
         await _prefs.setString('email', user.email);
@@ -123,6 +121,8 @@ class VerifyOtpController extends GetxController {
         await _prefs.setString('is_email_verified', user.isEmailVerified.toString());
         await _prefs.setString('is_face_recognition_active', user.isFaceRecognitionActive.toString());
         await _prefs.setString('has_child_data', user.hasChildData.toString());
+
+        Get.offAllNamed(Routes.VERIFY_SUCCESS);
 
 
       } else {

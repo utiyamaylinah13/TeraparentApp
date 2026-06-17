@@ -250,7 +250,6 @@ class ChildDataView extends GetView<ChildDataController> {
   required String value,
   required bool isSelected,
 }) {
-  const Color primaryGreen = Color(0xFF4CAF50);
 
   return GestureDetector(
     onTap: () {

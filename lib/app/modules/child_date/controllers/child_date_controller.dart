@@ -151,13 +151,21 @@ class ChildDataController extends GetxController {
   }
 
   @override
+  void onInit() {
+    super.onInit();
+    print("=== CHILD DATA CONTROLLER INIT $hashCode ===");
+  }
+
+  @override
   void onClose() {
-    // namaAnakC.dispose();
-    // usiaC.dispose();
-    // tinggiC.dispose();
-    // beratC.dispose();
-    // initialDevelopmentNoteC.dispose();
-    debugPrint("ChildDataController onClose dipanggil");
+    print("=== CHILD DATA CONTROLLER CLOSE $hashCode ===");
+
+    namaAnakC.dispose();
+    usiaC.dispose();
+    tinggiC.dispose();
+    beratC.dispose();
+    initialDevelopmentNoteC.dispose();
+
     super.onClose();
   }
 }
