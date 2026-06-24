@@ -239,32 +239,13 @@ class ScreeningController extends GetxController {
       
       if (response.success && response.data != null) {
         final screeningResult = response.data!;
-        final prefs = await SharedPreferences.getInstance();
+        // final prefs = await SharedPreferences.getInstance();
 
-        await prefs.setString(
-          'mainIndication',
-          screeningResult.mainIndication ?? '',
-        );
-
-        await prefs.setInt(
-          'finalScore',
-          screeningResult.finalScore,
-        );
-
-        await prefs.setString(
-          'priorityDomain',
-          screeningResult.priorityDomain ?? '',
-        );
-
-        await prefs.setString(
-          'recommendation',
-          screeningResult.recommendation ?? '',
-        );
-
-        await prefs.setString(
-          'riskCategory',
-          screeningResult.riskCategory,
-        );
+        // await prefs.setString('mainIndication', screeningResult.mainIndication);
+        // await prefs.setInt('finalScore', screeningResult.finalScore);
+        // await prefs.setString('priorityDomain', screeningResult.priorityDomain);
+        // await prefs.setString('recommendation', screeningResult.recommendationText);
+        // await prefs.setString('riskCategory', screeningResult.riskCategory);
 
         Get.offAllNamed(
           Routes.RESULT_SCREENING,

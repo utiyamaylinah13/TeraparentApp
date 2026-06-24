@@ -114,7 +114,7 @@ class ChildDataController extends GetxController {
         final SharedPreferences _prefs = await SharedPreferences.getInstance();
         
         await _prefs.setString("childId", child.id);
-        await _prefs.setString("name", child.childName);
+        await _prefs.setString("childName", child.childName);
         await _prefs.setString("birthDate", child.birthDate.toString());
         await _prefs.setString("gender", child.gender);
         await _prefs.setDouble("heightCm", child.heightCm);

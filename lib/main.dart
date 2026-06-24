@@ -64,7 +64,7 @@ Future<String> getInitialRoute() async {
   debugPrint('is_email_verified : ${prefs.get('is_email_verified')}');
   debugPrint('has_child_data : ${prefs.get('has_child_data')}');
   debugPrint('childId  : ${prefs.get('childId')}');
-  debugPrint('chiild_name : ${prefs.get('name')}');
+  debugPrint('chiild_name : ${prefs.get('childName')}');
 
   if (validLogin) {
     await prefs.remove('pending_otp');

@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 import 'package:teraparent_mobile/app/data/models/screening_model.dart';
 import 'package:teraparent_mobile/app/data/services/screening_services.dart';
 
@@ -82,25 +82,36 @@ class ResultScreeningController extends GetxController {
   }
 
   Future<void> loadResultFromStorage() async {
-    final prefs = await SharedPreferences.getInstance();
+    // final prefs = await SharedPreferences.getInstance();
 
-    final riskCategory = prefs.getString('riskCategory');
-    final finalScore = prefs.getInt('finalScore');
-    final mainIndication = prefs.getString('mainIndication');
-    final priorityDomain = prefs.getString('priorityDomain');
-    final recommendation = prefs.getString('recommendation');
+    // final riskCategory = prefs.getString('riskCategory');
+    // final finalScore = prefs.getInt('finalScore');
+    // final mainIndication = prefs.getString('mainIndication');
+    // final priorityDomain = prefs.getString('priorityDomain');
+    // final recommendation = prefs.getString('recommendation');
 
-    if (riskCategory == null || finalScore == null) {
-      return;
-    }
+    // if (riskCategory == null || finalScore == null) {
+    //   return;
+    // }
 
-    result.value = ScreeningResultModel(
-      riskCategory: riskCategory,
-      finalScore: finalScore,
-      mainIndication: mainIndication,
-      priorityDomain: priorityDomain,
-      recommendation: recommendation,
-    );
+    // result.value = ScreeningResultModel(
+    //   riskCategory: riskCategory,
+    //   finalScore: finalScore,
+    //   mainIndication: mainIndicationText,
+    //   priorityDomain: priorityDomainText,
+    //   recommendationText: recommendationText, 
+    //   id: '', 
+    //   childId: '', 
+    //   status: '', 
+    //   indicationSummary: '', 
+    //   resultDescription: '', 
+    //   disclaimerText: '', 
+    //   communicationSpeechScore: null, 
+    //   physicalMotorScore: null, 
+    //   cognitiveProblemSolvingScore: null, 
+    //   socialEmotionalScore: null,
+
+    // );
   }
 
   String get riskCategory {
@@ -135,7 +146,7 @@ class ResultScreeningController extends GetxController {
       case 'SPEECH_DELAY':
         return 'Speech Delay';
       case 'AUTISM':
-        return 'Autism Spectrum';
+        return 'Autisme Spectrum';
       case 'ADHD':
         return 'ADHD';
       case 'DEVELOPMENT_CONCERN':
@@ -167,7 +178,7 @@ class ResultScreeningController extends GetxController {
   }
 
   String get recommendationText {
-    final value = result.value?.recommendation;
+    final value = result.value?.recommendationText;
 
     if (value == null || value.isEmpty || value == 'null') {
       return 'Belum ada rekomendasi yang tersedia dari hasil screening.';
@@ -177,15 +188,17 @@ class ResultScreeningController extends GetxController {
   }
 
   String get analysisDescription {
-    if (finalScore <= 40) {
-      return 'Berdasarkan hasil screening, perkembangan Ananda berada pada kategori risiko rendah. Tetap lakukan stimulasi perkembangan secara rutin di rumah.';
+    final value = result.value?.resultDescription;
+
+    if (value != null && value.isNotEmpty) {
+      return value;
     }
 
-    if (finalScore <= 70) {
-      return 'Berdasarkan hasil screening, Ananda menunjukkan beberapa area perkembangan yang perlu diperhatikan, terutama pada domain $priorityDomainText.';
-    }
+    return '-';
+  }
 
-    return 'Berdasarkan hasil screening, Ananda menunjukkan indikasi yang cukup tinggi pada domain $priorityDomainText. Disarankan untuk melakukan konsultasi lebih lanjut dengan tenaga profesional.';
+  String get disclaimerText {
+    return result.value?.disclaimerText ?? '-';
   }
 
   String get lastScreeningText {

@@ -105,46 +105,163 @@ class SubmitScreeningRequestModel {
 }
 
 class ScreeningResultModel {
-  final String riskCategory;
-  final String? mainIndication;
+  final String id;
+  final String childId;
+  final String status;
   final int finalScore;
-  final String? priorityDomain;
-  final String? recommendation;
+  final String mainIndication;
+  final String riskCategory;
+  final String priorityDomain;
+  final String indicationSummary;
+  final String resultDescription;
+  final String recommendationText;
+  final String disclaimerText;
+  final int communicationSpeechScore;
+  final int physicalMotorScore;
+  final int cognitiveProblemSolvingScore;
+  final int socialEmotionalScore;
+  // final int communicationSpeechPercentage;
+  // final int physicalMotorPercentage;
+  // final int cognitiveProblemSolvingPercentage;
+  // final int socialEmotionalPercentage;
+
+  final DateTime? completedAt;
 
   ScreeningResultModel({
-    required this.riskCategory,
-    this.mainIndication,
+    required this.id,
+    required this.childId,
+    required this.status,
     required this.finalScore,
-    this.priorityDomain,
-    this.recommendation,
+    required this.mainIndication,
+    required this.riskCategory,
+    required this.priorityDomain,
+    required this.indicationSummary,
+    required this.resultDescription,
+    required this.recommendationText,
+    required this.disclaimerText,
+    required this.communicationSpeechScore,
+    required this.physicalMotorScore,
+    required this.cognitiveProblemSolvingScore,
+    required this.socialEmotionalScore,
+    // required this.communicationSpeechPercentage,
+    // required this.physicalMotorPercentage,
+    // required this.cognitiveProblemSolvingPercentage,
+    // required this.socialEmotionalPercentage,
+    this.completedAt,
   });
 
   factory ScreeningResultModel.fromJson(Map<String, dynamic> json) {
-    return ScreeningResultModel(
-      riskCategory: json['riskCategory']?.toString() ??
-          json['category']?.toString() ??
-          json['risk_category']?.toString() ??
-          '',
-      mainIndication: json['mainIndication']?.toString() ??
-          json['main_indication']?.toString(),
-      finalScore: int.tryParse(
-            json['finalScore']?.toString() ??
-                json['final_score']?.toString() ??
-                json['score']?.toString() ??
-                '0',
-          ) ??
-          0,
-      priorityDomain: json['priorityDomain']?.toString() ??
-          json['priority_domain']?.toString(),
-      recommendation: json['recommendation']?.toString() ??
-          json['generalRecommendation']?.toString() ??
-          json['generalRecommendationText']?.toString() ??
-          json['general_recommendation']?.toString(),
+    final finalScore = int.tryParse(json['finalScore']?.toString() ?? '0') ?? 0;
+
+    final communicationScore =
+        int.tryParse(json['communicationSpeechScore']?.toString() ?? '0') ?? 0;
+    final physicalScore =
+        int.tryParse(json['physicalMotorScore']?.toString() ?? '0') ?? 0;
+    final cognitiveScore =
+        int.tryParse(json['cognitiveProblemSolvingScore']?.toString() ?? '0') ??
+            0;
+    final socialScore =
+        int.tryParse(json['socialEmotionalScore']?.toString() ?? '0') ?? 0;
+
+    final communicationPercentage = _percentageOrFallback(
+      json['communicationSpeechPercentage'],
+      communicationScore,
     );
+
+    final physicalPercentage = _percentageOrFallback(
+      json['physicalMotorPercentage'],
+      physicalScore,
+    );
+
+    final cognitivePercentage = _percentageOrFallback(
+      json['cognitiveProblemSolvingPercentage'],
+      cognitiveScore,
+    );
+
+    final socialPercentage = _percentageOrFallback(
+      json['socialEmotionalPercentage'],
+      socialScore,
+    );
+
+    return ScreeningResultModel(
+      id: json['id']?.toString() ?? '',
+      childId: json['childId']?.toString() ?? '',
+      status: json['status']?.toString() ?? '',
+      finalScore: finalScore,
+      mainIndication: json['mainIndication']?.toString() ?? '',
+      riskCategory: json['riskCategory']?.toString() ??
+          _getRiskCategory(finalScore),
+      priorityDomain: json['priorityDomain']?.toString() ??
+          _getPriorityDomain(
+            communicationPercentage: communicationPercentage,
+            physicalPercentage: physicalPercentage,
+            cognitivePercentage: cognitivePercentage,
+            socialPercentage: socialPercentage,
+          ),
+      indicationSummary: json['indicationSummary']?.toString() ?? '',
+      resultDescription: json['resultDescription']?.toString() ?? '',
+      recommendationText: json['recommendationText']?.toString() ??
+          json['recommendation']?.toString() ??
+          '',
+      disclaimerText: json['disclaimerText']?.toString() ??
+          'Hasil screening ini bukan diagnosis final dan tidak menggantikan pemeriksaan profesional.',
+      communicationSpeechScore: communicationScore,
+      physicalMotorScore: physicalScore,
+      cognitiveProblemSolvingScore: cognitiveScore,
+      socialEmotionalScore: socialScore,
+      // communicationSpeechPercentage: communicationPercentage,
+      // physicalMotorPercentage: physicalPercentage,
+      // cognitiveProblemSolvingPercentage: cognitivePercentage,
+      // socialEmotionalPercentage: socialPercentage,
+      // completedAt: json['completedAt'] != null
+      //     ? DateTime.tryParse(json['completedAt'].toString())
+      //     : null,
+    );
+  }
+
+  static int _percentageOrFallback(dynamic percentageValue, int score) {
+    final percentage = int.tryParse(percentageValue?.toString() ?? '0') ?? 0;
+
+    if (percentage > 0) {
+      return percentage;
+    }
+
+    return (score * 10).clamp(0, 100);
+  }
+
+  static String _getRiskCategory(int finalScore) {
+    if (finalScore <= 40) {
+      return 'Risiko Rendah';
+    }
+
+    if (finalScore <= 70) {
+      return 'Risiko Sedang';
+    }
+
+    return 'Risiko Tinggi';
+  }
+
+  static String _getPriorityDomain({
+    required int communicationPercentage,
+    required int physicalPercentage,
+    required int cognitivePercentage,
+    required int socialPercentage,
+  }) {
+    final scores = {
+      'COMMUNICATION_SPEECH': communicationPercentage,
+      'PHYSICAL_MOTOR': physicalPercentage,
+      'COGNITIVE_PROBLEM_SOLVING': cognitivePercentage,
+      'SOCIAL_EMOTIONAL': socialPercentage,
+    };
+
+    final sorted = scores.entries.toList()
+      ..sort((a, b) => b.value.compareTo(a.value));
+
+    return sorted.first.key;
   }
 
   @override
   String toString() {
-    return 'ScreeningResultModel(riskCategory: $riskCategory, mainIndication: $mainIndication, finalScore: $finalScore, priorityDomain: $priorityDomain, recommendation: $recommendation)';
+    return 'ScreeningResultModel(finalScore: $finalScore, mainIndication: $mainIndication, riskCategory: $riskCategory, priorityDomain: $priorityDomain, recommendationText: $recommendationText)';
   }
 }
