@@ -1,16 +1,25 @@
 import 'package:flutter/material.dart';
 
-Widget headerProfile() {
+Widget headerProfile({
+  String photoUrl = '',
+}) {
+  final hasPhoto = photoUrl.isNotEmpty;
+
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
       Row(
         children: [
-          const CircleAvatar(
+          CircleAvatar(
             radius: 24,
-            backgroundImage: NetworkImage(
-              "https://imgs.search.brave.com/QBk-dd-Zhpn11Mn8VSx0TDNUZ8P5GCCSKACvYdEdoMA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/ZGFpbHlzaWEuY29t/L3dwLWNvbnRlbnQv/dXBsb2Fkcy8yMDIx/LzEyL0lyZmFuLUdo/YWZ1ci02NjB4NDAw/LmpwZw",
-            ),
+            backgroundColor: const Color(0xffD5F0E5),
+            backgroundImage: hasPhoto ? NetworkImage(photoUrl) : null,
+            child: hasPhoto
+                ? null
+                : const Icon(
+                    Icons.person,
+                    color: Color(0xFF2F6F5F),
+                  ),
           ),
 
           const SizedBox(width: 12),
@@ -19,16 +28,31 @@ Widget headerProfile() {
             'Teraparent',
             style: TextStyle(
               fontSize: 24,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w800,
               color: Color(0xFF2F6F5F),
             ),
           ),
         ],
       ),
 
-      IconButton(
-        onPressed: () {},
-        icon: const Icon(Icons.notifications_none, color: Color(0xFF2F6F5F)),
+      Container(
+        height: 42,
+        width: 42,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          shape: BoxShape.circle,
+          border: Border.all(
+            color: const Color(0xffE6EFEA),
+          ),
+        ),
+        child: IconButton(
+          onPressed: () {},
+          icon: const Icon(
+            Icons.notifications_none,
+            color: Color(0xFF2F6F5F),
+            size: 22,
+          ),
+        ),
       ),
     ],
   );

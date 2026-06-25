@@ -1,310 +1,200 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:teraparent_mobile/app/core/widgets/card_daily_activity.dart';
 import 'package:teraparent_mobile/app/core/widgets/header_profile.dart';
 import 'package:teraparent_mobile/app/routes/app_pages.dart';
 import 'package:teraparent_mobile/app/core/theme/colors.dart';
+
 import '../../../core/widgets/bottom_nav.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
 
+  static const Color primaryColor = Color(0xff2F6F57);
+  static const Color softGreen = Color(0xffD5F0E5);
+  static const Color softBlue = Color(0xffDDF2F8);
+  static const Color textDark = Color(0xff202020);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-
+      bottomNavigationBar: BottomNavbar(),
       body: SafeArea(
         child: Stack(
           children: [
-            Positioned(
-              top: -70,
-              right: -70,
-              child: Container(
-                height: 220,
-                width: 220,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: const Color(0xffB8F2DF).withOpacity(0.8),
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color(0xffB8F2DF).withOpacity(0.7),
-                      blurRadius: 80,
-                      spreadRadius: 40,
+            _topBlur(),
+            _bottomBlur(),
+
+            Obx(
+              () {
+                if (controller.isLoading.value) {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: primaryColor,
                     ),
-                  ],
-                ),
-              ),
-            ),
+                  );
+                }
 
-            // ================= BLUR BOTTOM =================
-            Positioned(
-              bottom: 120,
-              left: -60,
-              child: Container(
-                height: 180,
-                width: 180,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: const Color(0xffD8F7FF).withOpacity(0.8),
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color(0xffD8F7FF).withOpacity(0.8),
-                      blurRadius: 80,
-                      spreadRadius: 40,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
-            // ================= CONTENT =================
-            SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 20),
-
-                  headerProfile(),
-                  
-                  const SizedBox(height: 30),
-
-                  // ================= GREETING =================
-                  // const Text(
-                  //   // controller.,
-                  //   style: TextStyle(
-                  //     fontSize: 34,
-                  //     fontWeight: FontWeight.bold,
-                  //     color: Color(0xff202020),
-                  //   ),
-                  // ),
-
-                  const SizedBox(height: 8),
-
-                  RichText(
-                    text: const TextSpan(
-                      children: [
-                        TextSpan(
-                          text: 'Ananda: ',
-                          style: TextStyle(color: Colors.black54, fontSize: 18),
-                        ),
-
-                        TextSpan(
-                          text: 'Julio, 4 Tahun',
-                          style: TextStyle(
-                            color: Color(0xff2F6F57),
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  const SizedBox(height: 30),
-
-                  // ================= PROGRESS CARD =================
-                  Container(
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(28),
-                      border: Border.all(color: Colors.grey.shade200),
-                    ),
-
+                return RefreshIndicator(
+                  color: primaryColor,
+                  onRefresh: () async {
+                    await controller.loadHomeData();
+                  },
+                  child: SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                Text(
-                                  'Progres Mingguan',
-                                  style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
+                        const SizedBox(height: 20),
 
-                                SizedBox(height: 6),
-
-                                Text(
-                                  'Aktivitas meningkat 12% dari minggu\nlalu',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black54,
-                                  ),
-                                ),
-                              ],
-                            ),
-
-                            const Icon(
-                              Icons.bar_chart,
-                              color: Color(0xff2F6F57),
-                            ),
-                          ],
+                        headerProfile(
+                          photoUrl: controller.userPhotoUrl.value,
                         ),
 
-                        const SizedBox(height: 30),
+                        const SizedBox(height: 24),
 
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            buildBar(40, const Color(0xffB9E7F3), 'SEN'),
+                        _welcomeCard(),
 
-                            buildBar(60, const Color(0xff9FD3E2), 'SEL'),
+                        const SizedBox(height: 22),
 
-                            buildBar(100, const Color(0xff9FE0C7), 'RAB'),
+                        _lastScreeningCard(),
 
-                            buildBar(50, const Color(0xff87B1A7), 'KAM', true),
+                        const SizedBox(height: 18),
 
-                            buildBar(30, Colors.grey.shade200, 'JUM'),
+                        _todayActivityCard(),
 
-                            buildBar(30, Colors.grey.shade200, 'SAB'),
+                        const SizedBox(height: 18),
 
-                            buildBar(30, Colors.grey.shade200, 'MIN'),
-                          ],
-                        ),
+                        _weeklyProgressCard(),
+
+                        const SizedBox(height: 26),
+
+                        _quickMenu(),
+
+                        const SizedBox(height: 120),
                       ],
                     ),
                   ),
-
-                  const SizedBox(height: 28),
-
-                  // ================= MENU =================
-                  Row(
-                    children: [
-                      // SCREENING
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            Get.toNamed(Routes.SCREENING);
-                          },
-                          child: menuCard(
-                            title: 'Mulai\nScreening',
-                            icon: Icons.fact_check_outlined,
-                            color: const Color(0xffD5F0E5),
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(width: 16),
-
-                      // INPUT AKTIVITAS
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            Get.toNamed(Routes.ACTIVITIES);
-                          },
-                          child: menuCard(
-                            title: 'Input\nAktivitas',
-                            icon: Icons.playlist_add_check,
-                            color: const Color(0xffDDF2F8),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 16),
-
-                  Row(
-                    children: [
-                      // GRAFIK
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            Get.toNamed(Routes.GRAFIK_PERKEMBANGAN);
-                          },
-                          child: menuCard(
-                            title: 'Grafik\nPerkembangan',
-                            icon: Icons.trending_up,
-                            color: const Color(0xffEDF3F1),
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(width: 16),
-
-                      // KONSULTASI
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            Get.toNamed(Routes.AHLI_TERAPIS);
-                          },
-                          child: menuCard(
-                            title: 'Konsultasi\nAhli Psikologi',
-                            icon: Icons.chat_bubble_outline,
-                            color: const Color(0xffEAEAEA),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 40),
-
-                  const Text(
-                    'Rekomendasi Hari Ini',
-                    style: TextStyle(fontSize: 28, fontWeight: FontWeight.w700),
-                  ),
-
-                  const SizedBox(height: 20),
-
-                  DailyActivityCardNone(
-                    imageUrl: "https://imgs.search.brave.com/zmlUaqMWUdPH-nO5dtFq2ikoaboiYpI0xjz7FGmKdY8/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9zdDQu/ZGVwb3NpdHBob3Rv/cy5jb20vNDYwNDMw/NS8yMjkyMS9pLzQ1/MC9kZXBvc2l0cGhv/dG9zXzIyOTIxNDc5/MC1zdG9jay1waG90/by1jaGlsZC1iaWN5/Y2xlLWFzcGhhbHQt/cm9hZC1zdW1tZXIu/anBn",
-                    title: 'Bersepeda',
-                    description: 'latihan bersepeda untuk melatih keseimbangan dan koordinasi',
-                    time: '15.00',
-                    onStart: () {
-                      Get.toNamed(Routes.DETAIL_ACTIVITY);
-                    },
-                  ),
-
-                  const SizedBox(height: 120),
-                ],
-              ),
+                );
+              },
             ),
           ],
         ),
       ),
-
-      bottomNavigationBar: BottomNavbar(),
     );
   }
 
-  Widget menuCard({
-    required String title,
-    required IconData icon,
-    required Color color,
-  }) {
+  // ================= WELCOME CARD =================
+
+  Widget _welcomeCard() {
     return Container(
-      height: 140,
-      padding: const EdgeInsets.all(20),
+      width: double.infinity,
+      padding: const EdgeInsets.all(22),
       decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(28),
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Color(0xffE7F8F1),
+            Color(0xffDDF2F8),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(30),
+        border: Border.all(
+          color: Colors.white.withOpacity(0.8),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xff2F6F57).withOpacity(0.08),
+            blurRadius: 24,
+            offset: const Offset(0, 12),
+          ),
+        ],
       ),
-
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
         children: [
-          Icon(icon, size: 30, color: const Color(0xff2F6F57)),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Halo selamat datang,',
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.black.withOpacity(0.55),
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
 
-          const Spacer(),
+                const SizedBox(height: 4),
 
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-              color: Color(0xff2F6F57),
+                Text(
+                  controller.firstName,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.w900,
+                    color: textDark,
+                  ),
+                ),
+
+                const SizedBox(height: 12),
+
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 9,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.85),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        Icons.child_care,
+                        size: 18,
+                        color: primaryColor,
+                      ),
+
+                      const SizedBox(width: 8),
+
+                      Flexible(
+                        child: Text(
+                          'Ananda: ${controller.childInfoText}',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: primaryColor,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          const SizedBox(width: 16),
+
+          Container(
+            height: 78,
+            width: 78,
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.9),
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(
+              Icons.family_restroom,
+              color: primaryColor,
+              size: 38,
             ),
           ),
         ],
@@ -312,19 +202,337 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  Widget buildBar(
-    double height,
-    Color color,
-    String day, [
+  // ================= CARD HASIL SCREENING =================
+
+  Widget _lastScreeningCard() {
+    return _baseCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _cardTitleRow(
+            icon: Icons.fact_check_outlined,
+            title: 'Hasil Screening Terakhir',
+            iconBackground: softGreen,
+          ),
+
+          const SizedBox(height: 18),
+
+          Row(
+            children: [
+              _statusChip(
+                text: controller.riskCategory.value,
+                backgroundColor: softGreen,
+                textColor: primaryColor,
+              ),
+
+              const Spacer(),
+
+              GestureDetector(
+                onTap: () {
+                  Get.toNamed(Routes.GRAFIK_PERKEMBANGAN);
+                },
+                child: const Row(
+                  children: [
+                    Text(
+                      'Lihat Detail',
+                      style: TextStyle(
+                        color: primaryColor,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                    SizedBox(width: 4),
+                    Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      size: 13,
+                      color: primaryColor,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 16),
+
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: const Color(0xffF7FAF9),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Row(
+              children: [
+                const Icon(
+                  Icons.psychology_alt_outlined,
+                  color: primaryColor,
+                  size: 24,
+                ),
+
+                const SizedBox(width: 12),
+
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Indikasi utama',
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: Colors.black45,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+
+                      const SizedBox(height: 4),
+
+                      Text(
+                        controller.mainIndication.value,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: textDark,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ================= CARD AKTIVITAS HARI INI =================
+
+  Widget _todayActivityCard() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(22),
+      decoration: BoxDecoration(
+        color: softBlue,
+        borderRadius: BorderRadius.circular(30),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xff2F6F57).withOpacity(0.06),
+            blurRadius: 20,
+            offset: const Offset(0, 10),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _cardTitleRow(
+            icon: Icons.playlist_add_check_rounded,
+            title: 'Aktivitas Hari Ini',
+            iconBackground: Colors.white.withOpacity(0.85),
+          ),
+
+          const SizedBox(height: 18),
+
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: 58,
+                width: 58,
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.9),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: const Icon(
+                  Icons.record_voice_over_outlined,
+                  color: primaryColor,
+                  size: 30,
+                ),
+              ),
+
+              const SizedBox(width: 14),
+
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      controller.activityTitle.value,
+                      style: const TextStyle(
+                        fontSize: 21,
+                        fontWeight: FontWeight.w900,
+                        color: textDark,
+                      ),
+                    ),
+
+                    const SizedBox(height: 6),
+
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.schedule_rounded,
+                          color: primaryColor,
+                          size: 17,
+                        ),
+
+                        const SizedBox(width: 6),
+
+                        Text(
+                          controller.activityDuration.value,
+                          style: const TextStyle(
+                            color: primaryColor,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 14),
+
+          Text(
+            controller.activityDescription.value,
+            style: const TextStyle(
+              color: Colors.black54,
+              fontSize: 15,
+              height: 1.45,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+
+          const SizedBox(height: 18),
+
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () {
+                Get.toNamed(Routes.DETAIL_ACTIVITY);
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: primaryColor,
+                foregroundColor: Colors.white,
+                elevation: 0,
+                padding: const EdgeInsets.symmetric(vertical: 15),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18),
+                ),
+              ),
+              child: const Text(
+                'Mulai Aktivitas',
+                style: TextStyle(
+                  fontWeight: FontWeight.w800,
+                  fontSize: 15,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ================= CARD PROGRESS MINGGUAN =================
+
+  Widget _weeklyProgressCard() {
+    return _baseCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _cardTitleRow(
+            icon: Icons.bar_chart_rounded,
+            title: 'Progress Mingguan',
+            iconBackground: softGreen,
+          ),
+
+          const SizedBox(height: 10),
+
+          Text(
+            controller.weeklyProgressText,
+            style: const TextStyle(
+              fontSize: 15,
+              color: Colors.black54,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+
+          const SizedBox(height: 26),
+
+          Container(
+            height: 142,
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 4),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: List.generate(
+                controller.weeklyProgress.length,
+                (index) {
+                  final item = controller.weeklyProgress[index];
+                  final todayIndex = DateTime.now().weekday - 1;
+
+                  return _buildProgressBar(
+                    day: item.day,
+                    value: item.value,
+                    height: controller.barHeight(item.value),
+                    active: index == todayIndex,
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildProgressBar({
+    required String day,
+    required int value,
+    required double height,
     bool active = false,
-  ]) {
+  }) {
+    final hasProgress = value > 0;
+
     return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Container(
-          width: 28,
+        if (active)
+          Container(
+            margin: const EdgeInsets.only(bottom: 6),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 7,
+              vertical: 3,
+            ),
+            decoration: BoxDecoration(
+              color: primaryColor,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: const Text(
+              'Hari ini',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 9,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          )
+        else
+          const SizedBox(height: 22),
+
+        AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
+          width: 30,
           height: height,
           decoration: BoxDecoration(
-            color: color,
+            color: hasProgress ? const Color(0xff9FE0C7) : Colors.grey.shade200,
             borderRadius: BorderRadius.circular(30),
           ),
         ),
@@ -335,11 +543,269 @@ class HomeView extends GetView<HomeController> {
           day,
           style: TextStyle(
             fontSize: 12,
-            fontWeight: active ? FontWeight.bold : FontWeight.w500,
-            color: active ? const Color(0xff2F6F57) : Colors.grey,
+            fontWeight: active ? FontWeight.w900 : FontWeight.w700,
+            color: active ? primaryColor : Colors.grey,
           ),
         ),
       ],
+    );
+  }
+
+  // ================= MENU CEPAT =================
+
+  Widget _quickMenu() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Menu Cepat',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.w900,
+            color: textDark,
+          ),
+        ),
+
+        const SizedBox(height: 16),
+
+        GridView.count(
+          crossAxisCount: 2,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          crossAxisSpacing: 14,
+          mainAxisSpacing: 14,
+          childAspectRatio: 1.35,
+          children: [
+            _menuCard(
+              title: 'Screening',
+              subtitle: 'Cek perkembangan',
+              icon: Icons.fact_check_outlined,
+              color: softGreen,
+              onTap: () {
+                Get.toNamed(Routes.SCREENING);
+              },
+            ),
+            _menuCard(
+              title: 'Aktivitas',
+              subtitle: 'Latihan harian',
+              icon: Icons.playlist_add_check,
+              color: softBlue,
+              onTap: () {
+                Get.toNamed(Routes.ACTIVITIES);
+              },
+            ),
+            _menuCard(
+              title: 'Grafik',
+              subtitle: 'Lihat progress',
+              icon: Icons.trending_up,
+              color: const Color(0xffEDF3F1),
+              onTap: () {
+                Get.toNamed(Routes.GRAFIK_PERKEMBANGAN);
+              },
+            ),
+            _menuCard(
+              title: 'Konsultasi',
+              subtitle: 'Hubungi ahli',
+              icon: Icons.chat_bubble_outline,
+              color: const Color(0xffF1F1F1),
+              onTap: () {
+                Get.toNamed(Routes.AHLI_TERAPIS);
+              },
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _menuCard({
+    required String title,
+    required String subtitle,
+    required IconData icon,
+    required Color color,
+    required VoidCallback onTap,
+  }) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(26),
+        child: Ink(
+          padding: const EdgeInsets.all(18),
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(26),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(
+                icon,
+                size: 28,
+                color: primaryColor,
+              ),
+
+              const Spacer(),
+
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.w900,
+                  color: primaryColor,
+                ),
+              ),
+
+              const SizedBox(height: 3),
+
+              Text(
+                subtitle,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.black.withOpacity(0.45),
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // ================= REUSABLE =================
+
+  Widget _baseCard({
+    required Widget child,
+  }) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(22),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(30),
+        border: Border.all(
+          color: const Color(0xffE9EFEC),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.035),
+            blurRadius: 18,
+            offset: const Offset(0, 10),
+          ),
+        ],
+      ),
+      child: child,
+    );
+  }
+
+  Widget _cardTitleRow({
+    required IconData icon,
+    required String title,
+    required Color iconBackground,
+  }) {
+    return Row(
+      children: [
+        Container(
+          height: 44,
+          width: 44,
+          decoration: BoxDecoration(
+            color: iconBackground,
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Icon(
+            icon,
+            color: primaryColor,
+            size: 24,
+          ),
+        ),
+
+        const SizedBox(width: 12),
+
+        Expanded(
+          child: Text(
+            title,
+            style: const TextStyle(
+              fontSize: 19,
+              fontWeight: FontWeight.w900,
+              color: textDark,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _statusChip({
+    required String text,
+    required Color backgroundColor,
+    required Color textColor,
+  }) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 14,
+        vertical: 8,
+      ),
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: Text(
+        text,
+        style: TextStyle(
+          color: textColor,
+          fontSize: 14,
+          fontWeight: FontWeight.w800,
+        ),
+      ),
+    );
+  }
+
+  // ================= BACKGROUND =================
+
+  Widget _topBlur() {
+    return Positioned(
+      top: -80,
+      right: -75,
+      child: Container(
+        height: 230,
+        width: 230,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: const Color(0xffB8F2DF).withOpacity(0.75),
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xffB8F2DF).withOpacity(0.65),
+              blurRadius: 90,
+              spreadRadius: 42,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _bottomBlur() {
+    return Positioned(
+      bottom: 120,
+      left: -70,
+      child: Container(
+        height: 190,
+        width: 190,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: const Color(0xffD8F7FF).withOpacity(0.75),
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xffD8F7FF).withOpacity(0.75),
+              blurRadius: 90,
+              spreadRadius: 42,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

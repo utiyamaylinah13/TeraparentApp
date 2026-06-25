@@ -1,5 +1,5 @@
 import 'package:teraparent_mobile/app/data/models/child_model.dart';
-
+import 'package:teraparent_mobile/app/data/models/screening_model.dart';
 class UserModel {
   final String id;
   final String fullName;
@@ -10,6 +10,7 @@ class UserModel {
   final bool isFaceRecognitionActive;
   final bool hasChildData;
   final List<ChildModel> children;
+  final List<ScreeningResultModel> resultScreening;
 
   UserModel({
     required this.id,
@@ -20,10 +21,24 @@ class UserModel {
     required this.isEmailVerified,
     required this.isFaceRecognitionActive,
     required this.hasChildData,
-    required this.children
+    required this.children,
+    required this.resultScreening
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
+
+    final resultScreeningJson = json['resultScreening'];
+
+    final resultScreeningList = resultScreeningJson is List
+        ? resultScreeningJson
+            .map(
+              (item) => ScreeningResultModel.fromJson(
+                Map<String, dynamic>.from(item),
+              ),
+            )
+            .toList()
+        : <ScreeningResultModel>[];
+
     return UserModel(
       id: json['id']?.toString() ?? '',
       fullName: json['fullName']?.toString() ?? '',
@@ -42,6 +57,7 @@ class UserModel {
                 ),
               ),
             ),
+      resultScreening: resultScreeningList
     );
   }
 }

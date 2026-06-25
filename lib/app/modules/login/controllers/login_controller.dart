@@ -60,6 +60,9 @@ class LoginController extends GetxController {
         final token = result.data!.token;
         final user = result.data!.user;
         final child = user.children.first;
+        final latestResult = user.resultScreening.isNotEmpty
+            ? user.resultScreening.first
+            : null;
 
         Get.snackbar(
           'Success', 
@@ -85,7 +88,24 @@ class LoginController extends GetxController {
         await _prefs.setString('birthDate', child.birthDate.toString());
         await _prefs.setDouble('weightKg', child.weightKg);
         await _prefs.setDouble('heightCm', child.heightCm);
-
+        if (latestResult != null) {
+          await _prefs.setString(
+            'mainIndication',
+            latestResult.mainIndication,
+          );
+          await _prefs.setString(
+            'priorityDomain',
+            latestResult.priorityDomain,
+          );
+          await _prefs.setString(
+            'riskCategory',
+            latestResult.riskCategory,
+          );
+        } else {
+          await _prefs.remove('mainIndication');
+          await _prefs.remove('priorityDomain');
+          await _prefs.remove('riskCategory');
+        }
         Get.offAllNamed(Routes.HOME);
       }
     } catch (e) {
